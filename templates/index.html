@@ -1,33 +1,19 @@
 {% extends "base.html" %}
 {% block title %}GymLand - Home{% endblock %}
 {% block body %}
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand" href="#page-top"><img src="{{ url_for('static', filename='assets/img/navbar-logo.svg') }}" alt="GymLand" /></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars ms-1"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/scheda">Scheda</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/esercizi">Esercizi</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/utenti">Utenti</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/trainer">Trainer</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/supervisor">Supervisor</a></li>
-                </ul>
-            </div>
-        </div>
+    <!-- Navigation semplice-->
+    <nav style="background:#eee; padding:1em; text-align:center;">
+        <a href="/dashboard">Dashboard</a> |
+        <a href="/scheda">Scheda</a> |
+        <a href="/esercizi">Esercizi</a> |
+        <a href="/utenti">Utenti</a> |
+        <a href="/trainer">Trainer</a> |
+        <a href="/supervisor">Supervisor</a>
     </nav>
-    <!-- Masthead-->
-    <header class="masthead">
-        <div class="container">
-            <div class="masthead-subheading">Benvenuto in GymLand!</div>
-            <div class="masthead-heading text-uppercase">Gestione Palestra API</div>
-            <a class="btn btn-primary btn-xl text-uppercase" href="/dashboard">Vai alla Dashboard</a>
-        </div>
+    <header style="background:#f5f5f5; padding:2em; text-align:center;">
+        <h2>Benvenuto in GymLand!</h2>
+        <h3>Gestione Palestra API</h3>
+        <a href="/dashboard" style="display:inline-block; padding:0.5em 1.5em; border-radius:4px; background:#007bff; color:#fff; text-decoration:none;">Vai alla Dashboard</a>
     </header>
     <!-- Sezioni principali-->
     <section class="page-section" id="services">

@@ -3,7 +3,7 @@ from flask import Flask, jsonify #qui importiamo Flask per creare l'applicazione
 from flask_smorest import Api #qui importiamo Api per gestire le API RESTful
 from db import db #qui importiamo il modulo db per gestire il database
 import models #qui importiamo il modulo models per definire i modelli del database
-from flask_jwt_extended import JWTManager  #qui importiamo JWTManager per gestire l'autenticazione JWT
+from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity  #qui importiamo JWTManager per gestire l'autenticazione JWT
 from resources.user import blp as UsersBlueprint
 from resources.trainer import blp as TrainerBlueprint
 from resources.supervisor import blp as SupervisorBlueprint
@@ -24,8 +24,26 @@ def create_app(db_url=None):
 
     # Rotte HTML
     @app.route("/dashboard")
+    @jwt_required()
     def dashboard():
-        return render_template("dashboard.html")
+        user_id = get_jwt_identity()
+        user = models.user.UserModel.query.filter_by(id=user_id).first()
+        abbonamenti = []
+        if user:
+            abbonamenti = [{
+                'tipo': 'Mensile',
+                'scadenza': user.abbonamento_fine.strftime('%d/%m/%Y') if user.abbonamento_fine else 'N/A'
+            }] if user.abbonamento_attivo() else []
+        # Recupero scheda attiva
+        scheda = user.schede.filter_by().first() if user else None
+        pagamenti = [] # Da implementare: query pagamenti utente
+        return render_template(
+            "dashboard.html",
+            user=user,
+            abbonamenti=abbonamenti,
+            scheda=scheda,
+            pagamenti=pagamenti
+        )
 
     @app.route("/scheda")
     def scheda():

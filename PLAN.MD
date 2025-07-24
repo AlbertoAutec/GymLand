@@ -21,14 +21,14 @@
 - [ ] Testare con Postman/Insomnia
 
 ## ✅ Struttura MVC
-- [ ] Creare cartella `models` con i file SQLAlchemy
-- [ ] Creare cartella `controllers` per le logiche dei vari ruoli
-- [ ] Creare cartella `views` per i template HTML (Flask render_template)
-- [ ] Integrare Bootstrap o Tailwind per frontend responsive
-- [ ] Implementare rotte Flask che richiamano i controller
+- [x] Creare cartella `models` con i file SQLAlchemy
+- [x] Creare cartella `controllers` per le logiche dei vari ruoli
+- [x] Creare cartella `views` per i template HTML (Flask render_template)
+- [x] Integrare Bootstrap o Tailwind per frontend responsive
+- [x] Implementare rotte Flask che richiamano i controller
 
 ## ✅ Funzionalità USER
-- [ ] Dashboard utente con scheda allenamento attiva
+- [x] Dashboard utente con scheda allenamento attiva
 - [ ] Funzione per segnare esercizio completato
 - [ ] Calendario attività personali
 
