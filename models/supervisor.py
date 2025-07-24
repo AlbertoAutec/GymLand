@@ -8,4 +8,12 @@ class Supervisor(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship('User', backref='supervisor_profile')
 
-    # Add any additional fields or methods for the Supervisor model here
+    # Flag per ruolo supervisor (può essere gestito anche in User)
+    attivo = db.Column(db.Boolean, default=True)
+
+    def __repr__(self):
+        return f"<Supervisor id={self.id} user_id={self.user_id} attivo={self.attivo}>"
+
+    def statistiche_utenti(self):
+        # Placeholder: qui si potrebbero calcolare statistiche sugli utenti
+        pass

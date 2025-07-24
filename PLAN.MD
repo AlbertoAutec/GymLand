@@ -8,16 +8,16 @@
 - [x] Configurare VSCode (debug, Copilot, ecc.)
 
 ## ✅ Database e Modelli (SQLAlchemy + SQLite)
-- [ ] Definire modello Utente (USER) con dati personali e abbonamento
-- [ ] Definire modello Trainer
-- [ ] Definire modello Supervisore (ruolo in tabella Users con flag)
-- [ ] Definire modello Esercizio (nome, descrizione, immagine)
-- [ ] Definire modello Scheda (relazione User-Trainer, lista esercizi, validità)
-- [ ] Migrazioni iniziali con Flask-Migrate
+ - [x] Definire modello Utente (USER) con dati personali e abbonamento
+ - [x] Definire modello Trainer
+ - [x] Definire modello Supervisore (ruolo in tabella Users con flag)
+ - [x] Definire modello Esercizio (nome, descrizione, immagine)
+ - [x] Definire modello Scheda (relazione User-Trainer, lista esercizi, validità)
+ - [x] Migrazioni iniziali con Flask-Migrate
 
 ## ✅ Autenticazione e Autorizzazioni
-- [ ] Implementare JWT (login, refresh, logout, registrazione)
-- [ ] Proteggere endpoint secondo ruolo (decoratori)
+ - [x] Implementare JWT (login, refresh, logout, registrazione)
+ - [x] Proteggere endpoint secondo ruolo (decoratori)
 - [ ] Testare con Postman/Insomnia
 
 ## ✅ Struttura MVC

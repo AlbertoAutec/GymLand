@@ -9,10 +9,11 @@ class TrainerModel(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship('UserModel', backref='trainer_profile')
 
-    # Add any additional fields for the Trainer model here
-    # For example:
-    # specialization = db.Column(db.String(100))
-    # experience_years = db.Column(db.Integer)
+    specialization = db.Column(db.String(100))
+    experience_years = db.Column(db.Integer)
+
+    # Relazione con le schede
+    schede = db.relationship('SchedaModel', backref='trainer', lazy='dynamic')
 
     def __repr__(self):
         return f'<Trainer {self.id}>'

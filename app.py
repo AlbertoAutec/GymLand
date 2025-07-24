@@ -3,9 +3,6 @@ from flask import Flask, jsonify #qui importiamo Flask per creare l'applicazione
 from flask_smorest import Api #qui importiamo Api per gestire le API RESTful
 from db import db #qui importiamo il modulo db per gestire il database
 import models #qui importiamo il modulo models per definire i modelli del database
-from resources.items import blp as ItemsBlueprint #qui importiamo il blueprint per le operazioni sugli articoli
-from resources.stores import blp as StoresBlueprint #qui importiamo il blueprint per le operazioni sui negozi
-from resources.tags import blp as TagsBlueprint #qui importiamo il blueprint per le operazioni sui tag  
 from flask_jwt_extended import JWTManager  #qui importiamo JWTManager per gestire l'autenticazione JWT
 from resources.user import blp as UsersBlueprint  #qui importiamo il blueprint per le operazioni sugli utenti
 from blocklist import BLOCKLIST #qui importiamo il modello Blocklist per gestire i token bloccati
@@ -65,9 +62,6 @@ def create_app(db_url=None): #qui definiamo la funzione per creare l'applicazion
         return jsonify({"message": "Fresh token required", "error": "fresh_token_required"}), 401  #qui restituiamo un messaggio di errore e lo stato HTTP 401 (Unauthorized)
 
 
-    api.register_blueprint(ItemsBlueprint) #qui registriamo il blueprint per le operazioni sugli articoli
-    api.register_blueprint(StoresBlueprint) #qui registriamo il blueprint per le operazioni sui negozi
-    api.register_blueprint(TagsBlueprint)  #qui registriamo il blueprint per le operazioni sui tag  
     api.register_blueprint(UsersBlueprint)  #qui registriamo il blueprint per le operazioni sugli utenti
 
     return app  #qui restituiamo l'istanza dell'applicazione Flask

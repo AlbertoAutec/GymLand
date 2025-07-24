@@ -18,4 +18,24 @@ class SchedaModel(db.Model):
     validita_inizio = db.Column(db.Date)
     validita_fine = db.Column(db.Date)
     esercizi = db.relationship('EsercizioModel', secondary=scheda_esercizi, backref='schede')
-    # ...eventuali altri campi...
+    descrizione = db.Column(db.String(255))  # campo opzionale per note o descrizione
+
+    def is_attiva(self):
+        """Restituisce True se la scheda è attualmente valida."""
+        from datetime import date
+        oggi = date.today()
+        return (self.validita_inizio is None or self.validita_inizio <= oggi) and \
+               (self.validita_fine is None or self.validita_fine >= oggi)
+
+    def aggiungi_esercizio(self, esercizio):
+        """Aggiunge un esercizio alla scheda se non già presente."""
+        if esercizio not in self.esercizi:
+            self.esercizi.append(esercizio)
+
+    def rimuovi_esercizio(self, esercizio):
+        """Rimuove un esercizio dalla scheda se presente."""
+        if esercizio in self.esercizi:
+            self.esercizi.remove(esercizio)
+
+    def __repr__(self):
+        return f"<Scheda id={self.id} user_id={self.user_id} trainer_id={self.trainer_id} attiva={self.is_attiva()}>"
