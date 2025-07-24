@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtualenv
+venv/
+.venv/
+
+# macOS
+.DS_Store
+
+# Flask instance folder
+instance/
+
+# Database
+*.db
+
+# Migrations cache
+migrations/__pycache__/
+
+# VS Code
+.vscode/

@@ -1,0 +1,11 @@
+Flask
+flask-SQLAlchemy
+Flask-Migrate
+Flask-JWT-Extended
+Flask-Cors
+python-dotenv
+marshmallow
+passlib
+gunicorn
+psycopg2-binary
+SQLAlchemy

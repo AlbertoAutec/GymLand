@@ -1,0 +1,12 @@
+version: '3' # specifica la versione del formato del file docker-compose.yml
+services:
+  # questa sezione definisce i servizi che compongono l'applicazione
+  web:
+    #nome del servizio
+    build: . #costruisce l'immagine Docker usando il Dockerfile nella directory corrente
+    ports:
+      # mappa la porta 5000 del container alla porta 5001 dell'host
+      - "5001:5000"
+    volumes:
+      # mappa la directory corrente all'interno del container
+      - .:/app
