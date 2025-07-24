@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from .user import User, db
+from .user import UserModel, db
 
 class Supervisor(db.Model):
     __tablename__ = 'supervisors'

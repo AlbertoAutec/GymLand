@@ -5,7 +5,7 @@ from flask_jwt_extended import jwt_required
 from db import db
 from models.trainer import TrainerModel
 from models.scheda import SchedaModel
-from models.esercizio import EsercizioModel
+from models.esercizio import Esercizio
 from schemas import TrainerSchema, SchedaSchema, EsercizioSchema
 from utils.decorators import role_required
 from controllers.trainer_controller import TrainerController

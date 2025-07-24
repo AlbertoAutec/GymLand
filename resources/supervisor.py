@@ -7,7 +7,7 @@ from models.supervisor import Supervisor
 from models.user import UserModel
 from models.trainer import TrainerModel
 from models.scheda import SchedaModel
-from models.esercizio import EsercizioModel
+from models.esercizio import Esercizio
 from schemas import SupervisorSchema, UserSchema, TrainerSchema, SchedaSchema, EsercizioSchema
 from utils.decorators import role_required
 from controllers.supervisor_controller import SupervisorController

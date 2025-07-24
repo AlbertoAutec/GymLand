@@ -1,7 +1,7 @@
 from db import db
 from .user import UserModel
 from .trainer import TrainerModel
-from .esercizio import EsercizioModel
+from .esercizio import Esercizio
 
 scheda_esercizi = db.Table(
     'scheda_esercizi',
