@@ -1,3 +1,4 @@
+
 from flask.views import MethodView  #qui importiamo MethodView per creare viste basate su classi    
 from flask_smorest import Blueprint, abort  #qui importiamo Blueprint per creare blueprint e abort per gestire gli errori HTTP
 from db import db  #qui importiamo il database dal file db.py
@@ -10,11 +11,30 @@ from flask_jwt_extended import (
     get_jwt, #qui importiamo get_jwt per ottenere il token JWT dalla richiesta
     jwt_required,  #qui importiamo jwt_required per proteggere le rotte con JWT
 )
-
 from passlib.hash import pbkdf2_sha256  #qui importiamo pbkdf2_sha256 per gestire l'hashing delle password
 from blocklist import BLOCKLIST  #qui importiamo il modello Blocklist per gestire i token bloccati
+from controllers.user_controller import UserController
 
 blp = Blueprint("Users", "users", description="Operations on users")  #qui creiamo un blueprint per le operazioni sugli utenti
+user_controller = UserController()
+
+@blp.route("/user/<int:user_id>/dashboard")
+class UserDashboard(MethodView):
+    @jwt_required()
+    def get(self, user_id):
+        result = user_controller.get_dashboard(user_id)
+        if not result:
+            abort(404, message="User or scheda not found")
+        return result
+
+@blp.route("/user/<int:user_id>/esercizio/<int:esercizio_id>/completa")
+class EsercizioCompleta(MethodView):
+    @jwt_required()
+    def post(self, user_id, esercizio_id):
+        ok = user_controller.segna_esercizio_completato(user_id, esercizio_id)
+        if not ok:
+            abort(400, message="Impossibile segnare esercizio completato")
+        return {"message": "Esercizio segnato come completato"}
 
 @blp.route("/register")  #qui definiamo la route per la registrazione degli utenti
 class UserRegister(MethodView):  #questa classe gestisce le operazioni di registrazione degli utenti
