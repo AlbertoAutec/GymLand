@@ -4,7 +4,11 @@ from flask_smorest import Api #qui importiamo Api per gestire le API RESTful
 from db import db #qui importiamo il modulo db per gestire il database
 import models #qui importiamo il modulo models per definire i modelli del database
 from flask_jwt_extended import JWTManager  #qui importiamo JWTManager per gestire l'autenticazione JWT
-from resources.user import blp as UsersBlueprint  #qui importiamo il blueprint per le operazioni sugli utenti
+from resources.user import blp as UsersBlueprint
+from resources.trainer import blp as TrainerBlueprint
+from resources.supervisor import blp as SupervisorBlueprint
+from resources.scheda import blp as SchedaBlueprint
+from resources.esercizio import blp as EsercizioBlueprint
 from blocklist import BLOCKLIST #qui importiamo il modello Blocklist per gestire i token bloccati
 from flask_migrate import Migrate  #qui importiamo Migrate per gestire le migrazioni del database
 
@@ -62,6 +66,10 @@ def create_app(db_url=None): #qui definiamo la funzione per creare l'applicazion
         return jsonify({"message": "Fresh token required", "error": "fresh_token_required"}), 401  #qui restituiamo un messaggio di errore e lo stato HTTP 401 (Unauthorized)
 
 
-    api.register_blueprint(UsersBlueprint)  #qui registriamo il blueprint per le operazioni sugli utenti
+    api.register_blueprint(UsersBlueprint)
+    api.register_blueprint(TrainerBlueprint)
+    api.register_blueprint(SupervisorBlueprint)
+    api.register_blueprint(SchedaBlueprint)
+    api.register_blueprint(EsercizioBlueprint)
 
     return app  #qui restituiamo l'istanza dell'applicazione Flask
