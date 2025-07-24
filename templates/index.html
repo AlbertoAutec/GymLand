@@ -1,36 +1,67 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GymLand - Home API</title>
-    <!-- Bootstrap CSS via CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">GymLand API</a>
-        </div>
-    </nav>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8 text-center">
-                <h1 class="mt-4">Benvenuto in GymLand </h1>
-                <p class="lead">Questa è la home delle API REST per la gestione della palestra.</p>
-                <hr>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="/dashboard">Dashboard</a></li>
-                    <li class="list-group-item"><a href="/scheda">Scheda Allenamento</a></li>
-                    <li class="list-group-item"><a href="/esercizi">Esercizi</a></li>
-                    <li class="list-group-item"><a href="/utenti">Utenti</a></li>
-                    <li class="list-group-item"><a href="/trainer">Trainer</a></li>
-                    <li class="list-group-item"><a href="/supervisor">Supervisor</a></li>
+{% extends "base.html" %}
+{% block title %}GymLand - Home{% endblock %}
+{% block body %}
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#page-top"><img src="{{ url_for('static', filename='assets/img/navbar-logo.svg') }}" alt="GymLand" /></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars ms-1"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/scheda">Scheda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/esercizi">Esercizi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/utenti">Utenti</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/trainer">Trainer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/supervisor">Supervisor</a></li>
                 </ul>
             </div>
         </div>
-    </div>
-    <!-- Bootstrap JS via CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    </nav>
+    <!-- Masthead-->
+    <header class="masthead">
+        <div class="container">
+            <div class="masthead-subheading">Benvenuto in GymLand!</div>
+            <div class="masthead-heading text-uppercase">Gestione Palestra API</div>
+            <a class="btn btn-primary btn-xl text-uppercase" href="/dashboard">Vai alla Dashboard</a>
+        </div>
+    </header>
+    <!-- Sezioni principali-->
+    <section class="page-section" id="services">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Funzionalità</h2>
+                <h3 class="section-subheading text-muted">Gestisci utenti, schede, esercizi e ruoli.</h3>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fas fa-dumbbell fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="my-3">Schede Allenamento</h4>
+                    <p class="text-muted">Crea, assegna e visualizza le schede degli utenti.</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fas fa-users fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="my-3">Gestione Utenti</h4>
+                    <p class="text-muted">Visualizza, modifica e gestisci utenti e ruoli.</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fas fa-running fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="my-3">Esercizi</h4>
+                    <p class="text-muted">CRUD esercizi e monitoraggio attività.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
