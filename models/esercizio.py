@@ -1,8 +1,6 @@
-from flask_sqlalchemy import SQLAlchemy
+from db import db
 
-db = SQLAlchemy()
-
-class Esercizio(db.Model):
+class EsercizioModel(db.Model):
     __tablename__ = 'esercizi'
 
     id = db.Column(db.Integer, primary_key=True)

@@ -1,7 +1,7 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from db import db
-from models.esercizio import Esercizio
+from models.esercizio import EsercizioModel as Esercizio
 from schemas import EsercizioSchema
 
 blp = Blueprint("esercizi", __name__, description="Operazioni sugli esercizi")

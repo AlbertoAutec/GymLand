@@ -11,6 +11,7 @@ class UserModel(db.Model):  #qui definiamo il modello UserModel che rappresenta 
     abbonamento_inizio = db.Column(db.Date)  #qui definiamo la colonna abbonamento_inizio come data
     abbonamento_fine = db.Column(db.Date)  #qui definiamo la colonna abbonamento_fine come data
     ruolo = db.Column(db.String(20), nullable=False)  #qui definiamo la colonna ruolo come stringa non nulla, i valori possono essere 'user', 'trainer' o 'supervisor'
+    email = db.Column(db.String(120), unique=True, nullable=False)  # Email unica e obbligatoria
 
     # Relazione con le schede
     schede = db.relationship('SchedaModel', backref='utente', lazy='dynamic')

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymLand – Supervisor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: #f4f6fa; font-family: 'Segoe UI', Arial, sans-serif; }
+        .navbar { background: #14213d; }
+        .navbar-brand img { height: 40px; }
+        .nav-link, .navbar-brand { color: #fff !important; }
+        .nav-link.active, .nav-link:focus, .nav-link:hover { color: #fca311 !important; }
+        .hero {
+            background: linear-gradient(90deg, #14213d 60%, #fca311 100%);
+            color: #fff;
+            padding: 70px 0 40px 0;
+            text-align: center;
+        }
+        .cta-btn {
+            font-size: 1.1rem;
+            padding: 0.7rem 2.2rem;
+            background: #fca311;
+            border: none;
+            color: #14213d;
+            border-radius: 30px;
+            margin-top: 25px;
+            transition: background 0.2s;
+        }
+        .cta-btn:hover { background: #ff6700; color: #fff; }
+        .section-title { color: #14213d; font-weight: 600; margin-bottom: 20px; }
+        .stat-card {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            padding: 22px 18px;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+        .stat-card .fa { font-size: 2rem; margin-bottom: 8px; }
+        .stat-value { font-size: 2.1rem; font-weight: 700; color: #14213d; }
+        .stat-label { font-size: 1.1rem; color: #6c757d; }
+        .stat-alert { color: #e63946; font-size: 1.2rem; }
+        .chart-box { background: #fff; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 18px 12px; }
+        .quick-list { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); padding: 14px 10px; margin-bottom: 18px; }
+        .quick-list .btn { font-size: 0.95em; padding: 0.3em 1.1em; }
+        .activity-list { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); padding: 18px 16px; }
+        .activity-list li { margin-bottom: 8px; }
+        .activity-list .fa { margin-right: 8px; }
+        .footer {
+            background: #14213d;
+            color: #fff;
+            padding: 28px 0 10px 0;
+            margin-top: 40px;
+        }
+        .footer a { color: #fca311; text-decoration: none; }
+        @media (max-width: 991px) {
+            .stat-card { margin-bottom: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/home">
+                <img src="/static/assets/logo-gymland.png" alt="GymLand Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="/supervisor">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Gestione Utenti</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Gestione Trainer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Statistiche</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Impostazioni</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/auth">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="display-5 fw-bold">Ciao {{ supervisor_name }}, ecco la panoramica della palestra digitale.</h1>
+            <p class="lead">Controlla lo stato degli utenti, dei trainer e delle schede in tempo reale.</p>
+            <a href="#" class="btn cta-btn"><i class="fa-solid fa-user-plus"></i> Aggiungi nuovo Trainer o Utente</a>
+        </div>
+    </section>
+
+    <div class="container mt-5">
+        <!-- Statistiche globali -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fa-solid fa-users"></i>
+                    <div class="stat-value">312</div>
+                    <div class="stat-label">Utenti attivi</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <div class="stat-value">18</div>
+                    <div class="stat-label">Trainer registrati</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                    <div class="stat-value">1.245</div>
+                    <div class="stat-label">Schede totali</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fa-solid fa-triangle-exclamation stat-alert"></i>
+                    <div class="stat-value stat-alert">2</div>
+                    <div class="stat-label">Segnalazioni recenti</div>
+                </div>
+            </div>
+        </div>
+        <!-- Grafico andamento settimanale (mockup) -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="chart-box">
+                    <h5 class="mb-3"><i class="fa-solid fa-chart-bar"></i> Andamento iscrizioni (ultimi 7 giorni)</h5>
+                    <img src="/static/assets/chart-mockup.png" alt="Grafico andamento" class="img-fluid">
+                </div>
+            </div>
+        </div>
+        <!-- Gestione rapida -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="quick-list">
+                    <h6 class="fw-bold mb-3"><i class="fa-solid fa-user"></i> Ultimi utenti registrati</h6>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Anna Neri <span class="badge bg-success ms-2">Attivo</span></span>
+                            <button class="btn btn-outline-danger btn-sm">Disattiva</button>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Marco Blu <span class="badge bg-warning ms-2">In attesa</span></span>
+                            <button class="btn btn-outline-success btn-sm">Attiva</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="quick-list">
+                    <h6 class="fw-bold mb-3"><i class="fa-solid fa-user-tie"></i> Ultimi trainer registrati</h6>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Elisa Verde <span class="text-muted ms-2">5 atleti</span></span>
+                            <button class="btn btn-outline-primary btn-sm">Assegna atleti</button>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Paolo Gialli <span class="text-muted ms-2">2 atleti</span></span>
+                            <button class="btn btn-outline-primary btn-sm">Assegna atleti</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Controllo attività -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="activity-list">
+                    <h6 class="fw-bold mb-3"><i class="fa-solid fa-bell"></i> Notifiche di sistema</h6>
+                    <ul class="list-unstyled mb-2">
+                        <li><i class="fa-solid fa-clipboard-check text-success"></i> Nuova scheda creata per <strong>Anna Neri</strong></li>
+                        <li><i class="fa-solid fa-user-tie text-warning"></i> Trainer <strong>Paolo Gialli</strong> in attesa di approvazione</li>
+                        <li><i class="fa-solid fa-trophy text-primary"></i> Utente <strong>Marco Blu</strong> ha raggiunto il traguardo "10 allenamenti"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 mb-2 mb-md-0">
+                    <a href="/home" class="fw-bold text-white">GymLand</a> &copy; 2025
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <a href="#">Linee guida Supervisor</a> |
+                    <a href="#">Report sistema</a> |
+                    <a href="#">Contatti</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

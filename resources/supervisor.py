@@ -1,13 +1,12 @@
-
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from flask_jwt_extended import jwt_required
 from db import db
-from models.supervisor import Supervisor
+from models.supervisor import SupervisorModel as Supervisor
 from models.user import UserModel
 from models.trainer import TrainerModel
 from models.scheda import SchedaModel
-from models.esercizio import Esercizio
+from models.esercizio import EsercizioModel as Esercizio
 from schemas import SupervisorSchema, UserSchema, TrainerSchema, SchedaSchema, EsercizioSchema
 from utils.decorators import role_required
 from controllers.supervisor_controller import SupervisorController
