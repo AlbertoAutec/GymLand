@@ -11,6 +11,7 @@ from resources.scheda import blp as SchedaBlueprint
 from resources.esercizio import blp as EsercizioBlueprint
 from blocklist import BLOCKLIST #qui importiamo il modello Blocklist per gestire i token bloccati
 from flask_migrate import Migrate  #qui importiamo Migrate per gestire le migrazioni del database
+from models.user import UserModel
 
 
 
@@ -85,37 +86,89 @@ def create_app(db_url=None):
     def auth():
         return render_template("auth.html")
 
+    @app.route("/jwt-login", methods=["GET", "POST"])
+    def jwt_login():
+        if request.method == "POST":
+            jwt_token = request.form.get("jwt_token")
+            if not jwt_token:
+                flash("Token JWT mancante.", "danger")
+                return redirect(url_for("jwt_login"))
+            from flask_jwt_extended import decode_token
+            try:
+                decoded = decode_token(jwt_token)
+                user_id = decoded.get("sub")
+                user = models.user.UserModel.query.filter_by(id=user_id).first()
+                trainer_name = user.nome if user else "Trainer"
+                return render_template("trainer.html", trainer_name=trainer_name, jwt_token=jwt_token)
+            except Exception as e:
+                flash(f"Token JWT non valido: {e}", "danger")
+                return redirect(url_for("jwt_login"))
+        # GET: mostra form per incollare il token
+        return '''<html><head><meta charset="utf-8"><title>JWT Login</title></head><body>
+        <h3>Accedi come trainer con JWT</h3>
+        <form method="POST">
+            <label for="jwt_token">Incolla qui il tuo token JWT:</label><br>
+            <textarea name="jwt_token" id="jwt_token" style="width:100%;height:100px"></textarea><br>
+            <button type="submit">Accedi</button>
+        </form>
+        </body></html>'''
+
     @app.route("/login", methods=["POST"])
     def login():
         email = request.form.get("email")
         password = request.form.get("password")
         role = request.form.get("role")
         from werkzeug.security import check_password_hash
+        # Login con ruolo scelto dall'utente
         user = models.user.UserModel.query.filter_by(email=email, ruolo=role).first()
         if user and check_password_hash(user.password, password):
-            from flask_jwt_extended import create_access_token, set_access_cookies
+            from flask_jwt_extended import create_access_token
             access_token = create_access_token(identity=user.id)
             print("JWT:", access_token)  # DEBUG
-            # Redirect in base al ruolo
-            if user.ruolo == "user":
-                next_url = url_for("home")
-            elif user.ruolo == "trainer":
-                next_url = url_for("trainer")
-            elif user.ruolo == "supervisor":
-                next_url = url_for("supervisor")
-            else:
-                next_url = url_for("home")
-            from flask import make_response
-            html = f'''<html><head><meta charset="utf-8"><title>Login...</title></head><body>
-            <h3>Login effettuato, reindirizzamento in corso...</h3>
-            <script>setTimeout(function(){{ window.location.href = '{next_url}'; }}, 500);</script>
+            # Mostra il token JWT all'utente per copia/incolla
+            html = f'''<html><head><meta charset="utf-8"><title>Token JWT</title>
+            <script>
+                setTimeout(function() {{ window.location.href = '/home'; }}, 3000);
+            </script>
+            </head><body>
+            <h3>Login effettuato come {role}!</h3>
+            <p>Copia questo token JWT e usalo per accedere alle pagine protette:</p>
+            <textarea style="width:100%;height:100px">{access_token}</textarea>
+            <form method="POST" action="/token-login">
+                <input type="hidden" name="jwt_token" value="{access_token}">
+                <button type="submit">Accedi come {role} con questo token</button>
+            </form>
+            <br>
+            <form action="/home" method="get">
+                <button type="submit">Vai alla Home</button>
+            </form>
+            <p style="color:gray;font-size:small;">Verrai reindirizzato automaticamente alla home tra 3 secondi...</p>
             </body></html>'''
+            from flask import make_response
             resp = make_response(html)
-            set_access_cookies(resp, access_token)
-            flash("Login effettuato con successo!", "success")
             return resp
         else:
             flash("Credenziali non valide o ruolo errato.", "danger")
+            return redirect(url_for("root"))
+    @app.route("/token-login", methods=["POST"])
+    def token_login():
+        jwt_token = request.form.get("jwt_token")
+        # Simula la validazione del token e imposta l'identità nella sessione
+        # In realtà, per usare il token senza cookie, dovresti passarlo come Authorization: Bearer ...
+        # Qui mostriamo solo la pagina trainer se il token è presente
+        if not jwt_token:
+            flash("Token JWT mancante.", "danger")
+            return redirect(url_for("root"))
+        # Decodifica il token per ottenere l'user_id
+        from flask_jwt_extended import decode_token
+        try:
+            decoded = decode_token(jwt_token)
+            user_id = decoded.get("sub")
+            user = models.user.UserModel.query.filter_by(id=user_id).first()
+            trainer_name = user.nome if user else "Trainer"
+            return render_template("trainer.html", trainer_name=trainer_name, jwt_token=jwt_token)
+        except Exception as e:
+            flash(f"Token JWT non valido: {e}", "danger")
             return redirect(url_for("root"))
 
     @app.route("/register", methods=["POST"])
